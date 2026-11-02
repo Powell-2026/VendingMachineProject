@@ -1,3 +1,10 @@
+import pickle
+import streamlit as st
+from PIL import Image
+
+vend_pic=Image.open("vending machine.avif")
+st.image(vend_pic, width=800)
+
 class Product(object):
     def __init__(self):
         self.name = ""
@@ -10,7 +17,7 @@ class VendingMachine(object):
         self.cash= ""
     def add_product(self, product):
         name=input("Enter product name: ")
-        quantity=input("Enter quantity: ")
+        quantity=int(input("Enter quantity: "))
         if quantity>10:
             print("The maximum quantity is 10")
         price=input("Enter price: ")
@@ -26,15 +33,35 @@ class VendingMachine(object):
             i=i+1
             if i>6:
                 break
+    def purchase(self):
+        print()
+# take out money
+# Purchase
+# stock report
+# empty machine
+
 #--
+
 while True:
     print("1. Enter user mode")
     print("2. Enter Vendor mode")
     choice=input()
     if choice=="1":
         VendingMachine().display_products()
+        file1=open("VendingMachine.dat", "rb")
+        while True:
+            try:
+                data=pickle.load(file1)
+                print(data.products)
+                print(data.cash)
+            except EOFError:
+                break
+            file1.close()
     if choice=="2":
         print("1. Add product")
         d1=input()
         if d1=="1":
             VendingMachine().add_product(Product())
+            file1=open("VendingMachine.dat", "ab")
+            pickle.dump(VendingMachine, file1)
+            file1.close()

@@ -56,6 +56,9 @@ class VendingMachine(object):
         self.products.append(price)
         self.products.append(location)
 
+    def add_cash(self, Cash):
+        int(input("Enter Cash Amount: "))
+
     def display_products(self):
         for i in self.products:
             print(i)
@@ -89,13 +92,17 @@ while True:
                 break
             file1.close()
 
-    if choice=="2":
+    elif choice=="2":
         print("1. Restock product")
         print("2. Add product")
         print("3. Count cash")
+        print("4. Add Cash")
+        print("5. Stock report")
         d1=input("Enter Choice: ")
 
         if d1=="1":
+            print("These are your available products:")
+            print(available_products)
             VendingMachine().add_product(Product())
             file1=open("VendingMachine.dat", "ab")
             pickle.dump(VendingMachine, file1)
@@ -109,6 +116,12 @@ while True:
             print()
 
         elif d1 == "4":
+            VendingMachine().add_cash()
+            file3=open("VendingMachine.dat", "ab")
+            pickle.dump(VendingMachine, file3)
+            file3.close()
+
+        elif d1 == "":
             exit()
 
         else:
